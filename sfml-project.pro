@@ -47,13 +47,27 @@ macx {
 }
 
 win32 {
+    # method 1
     sfml-library.path  = $${DESTDIR}
     sfml-library.files = $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/
     INSTALLS += sfml-library
+
+    # method 2+1
     #QMAKE_BUNDLE_DATA += sfml-library
-    #PRE_TARGETDEPS += $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/*
-    #copyfiles.commands += copy /y $${PWD}\\library\\sfml\\$${CONFIG_PLATFORM_PATH}\\bin\\sfml-system-2.dll debug
-    #QMAKE_EXTRA_TARGETS += copyfiles
+
+    # method 3
+    #EXTRA_BINFILES += \
+    #    $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/sfml-system-2.dll
+    #EXTRA_BINFILES_WIN = $${EXTRA_BINFILES}
+    #EXTRA_BINFILES_WIN ~= s,/,\\,g
+    #    DESTDIR_WIN = $${DESTDIR}
+    #DESTDIR_WIN ~= s,/,\\,g
+    #for(FILE,EXTRA_BINFILES_WIN){
+    #            QMAKE_POST_LINK +=$$quote(cmd /c copy /y $${FILE} $${DESTDIR_WIN}$$escape_expand(\n\t))
+    #}
+
+    # method 4
+    #QMAKE_POST_LINK += copy /Y $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/sfml-system-2.dll $${PWD}/debug
 }
 
 unix:!macx {
