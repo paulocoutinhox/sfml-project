@@ -8,6 +8,7 @@ SOURCES += main.cpp
 # CONFIGURATION
 ###############################################
 
+CONFIG += copy_dir_files
 CONFIG_APP_NAME = sfml-project
 
 macx {
@@ -41,33 +42,12 @@ LIBS += -L"$${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib" \
     -lsfml-network
 
 macx {
-    sfml-library.path  = Contents/Frameworks
-    sfml-library.files = $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib/
-    QMAKE_BUNDLE_DATA += sfml-library
+    QMAKE_POST_LINK += $(MKDIR) $${CONFIG_APP_NAME}.app/Contents/Frameworks &&
+    QMAKE_POST_LINK += $${QMAKE_COPY} $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib/* $${CONFIG_APP_NAME}.app/Contents/Frameworks
 }
 
 win32 {
-    # method 1
-    sfml-library.path  = $${DESTDIR}
-    sfml-library.files = $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/
-    INSTALLS += sfml-library
-
-    # method 2+1
-    #QMAKE_BUNDLE_DATA += sfml-library
-
-    # method 3
-    #EXTRA_BINFILES += \
-    #    $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/sfml-system-2.dll
-    #EXTRA_BINFILES_WIN = $${EXTRA_BINFILES}
-    #EXTRA_BINFILES_WIN ~= s,/,\\,g
-    #    DESTDIR_WIN = $${DESTDIR}
-    #DESTDIR_WIN ~= s,/,\\,g
-    #for(FILE,EXTRA_BINFILES_WIN){
-    #            QMAKE_POST_LINK +=$$quote(cmd /c copy /y $${FILE} $${DESTDIR_WIN}$$escape_expand(\n\t))
-    #}
-
-    # method 4
-    #QMAKE_POST_LINK += copy /Y $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/sfml-system-2.dll $${PWD}/debug
+    QMAKE_POST_LINK += $${QMAKE_COPY} $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/bin/* $(OBJECTS_DIR)
 }
 
 unix:!macx {
