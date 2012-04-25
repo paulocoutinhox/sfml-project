@@ -8,27 +8,31 @@ SOURCES += main.cpp
 # CONFIGURATION
 ###############################################
 
-CONFIG += copy_dir_files
 CONFIG_APP_NAME = sfml-project
+
+CONFIG += copy_dir_files
+TARGET = $${CONFIG_APP_NAME}
 
 macx {
     CONFIG_PLATFORM_PATH  = mac
     CONFIG_ICON_EXTENSION = icns
+
+    ICON = $${PWD}/resources/$${CONFIG_PLATFORM_PATH}/app.$${CONFIG_ICON_EXTENSION}
 }
 
 win32 {
     CONFIG_PLATFORM_PATH  = win32
     CONFIG_ICON_EXTENSION = png
+
     RC_FILE = $${PWD}/resources/$${CONFIG_PLATFORM_PATH}/app.rc
 }
 
 unix:!macx {
     CONFIG_PLATFORM_PATH  = unix
     CONFIG_ICON_EXTENSION = png
-}
 
-ICON = $${PWD}/resources/$${CONFIG_PLATFORM_PATH}/app.$${CONFIG_ICON_EXTENSION}
-TARGET = $${CONFIG_APP_NAME}
+    ICON = $${PWD}/resources/$${CONFIG_PLATFORM_PATH}/app.$${CONFIG_ICON_EXTENSION}
+}
 
 ###############################################
 # SFML LIBRARY
