@@ -19,6 +19,7 @@ macx {
 win32 {
     CONFIG_PLATFORM_PATH  = win32
     CONFIG_ICON_EXTENSION = png
+    RC_FILE = $${PWD}/resources/$${CONFIG_PLATFORM_PATH}/app.rc
 }
 
 unix:!macx {
@@ -53,3 +54,6 @@ win32 {
 unix:!macx {
     # need implement
 }
+
+OTHER_FILES += \
+    resources/win32/app.rc
