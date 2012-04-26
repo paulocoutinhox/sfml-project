@@ -48,7 +48,7 @@ LIBS += -L"$${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib" \
 
 macx {
     QMAKE_POST_LINK += $(MKDIR) $${CONFIG_APP_NAME}.app/Contents/Frameworks &&
-    QMAKE_POST_LINK += $${QMAKE_COPY} $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib/* $${CONFIG_APP_NAME}.app/Contents/Frameworks
+    QMAKE_POST_LINK += $${QMAKE_COPY} -r $${PWD}/library/sfml/$${CONFIG_PLATFORM_PATH}/lib/* $${CONFIG_APP_NAME}.app/Contents/Frameworks
 }
 
 win32 {
